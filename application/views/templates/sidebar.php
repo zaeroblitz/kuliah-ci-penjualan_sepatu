@@ -18,7 +18,7 @@
     <li class="nav-item active">
         <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link pb-0" href="<?= base_url('mobil'); ?>">
+        <a class="nav-link pb-0" href="<?= base_url('sepatu'); ?>">
             <i class="fa fa-fw fa-store"></i>
             <span>Data Sepatu</span></a>
     </li>    

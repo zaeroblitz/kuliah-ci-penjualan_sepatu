@@ -26,11 +26,11 @@ class ModelKategori extends CI_Model
     }
 
     //join
-    public function joinKategoriMobil($where)
+    public function joinKategoriSepatu($where)
     {
-        $this->db->select('mobil.id_kategori,kategori.id_kategori');
-        $this->db->from('mobil');
-        $this->db->join('kategori', 'kategori.id_kategori = mobil.id_kategori');
+        $this->db->select('sepatu.id_kategori,kategori.id_kategori');
+        $this->db->from('sepatu');
+        $this->db->join('kategori', 'kategori.id_kategori = sepatu.id_kategori');
         $this->db->where($where);
         return $this->db->get();
     }

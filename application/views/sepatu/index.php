@@ -8,7 +8,7 @@
                     <?= validation_errors(); ?>
                 </div>
             <?php } ?>
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#sepatuBaruModal"><i class="fas fa-filealt"></i> Mobil Baru</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#sepatuBaruModal"><i class="fas fa-plus-circle"></i> Sepatu Baru</a>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -31,6 +31,7 @@
                 <tbody>
                     <?php
                     $a = 1;
+                    $this->load->helper('text');
                     foreach ($sepatu as $s) { ?>
                         <tr>
                             <th scope="row"><?= $a++; ?></th>
@@ -44,7 +45,7 @@
                             <td><?= $s['harga']; ?></td>
                             <td><?= $s['stok']; ?></td>
                             <td><?= $s['terjual']; ?></td>
-                            <td><?= $s['deskripsi']; ?></td>
+                            <td><?= word_limiter($s['deskripsi'], 10) ?></td>
                             <td>
                                 <picture>
                                     <source srcset="" type="image/svg+xml">
@@ -53,8 +54,8 @@
                                 </picture>
                             </td>
                             <td>
-                                <a href="<?= base_url('mobil/ubahMobil/') . $s['id']; ?>" class="badge badge-info"><i class="fas fa-edit"></i> Ubah</a>
-                                <a href="<?= base_url('mobil/hapusMobil/') . $s['id']; ?>" onclick="return confirm('Kamu yakin akan menghapus <?= $judul . '' . $s['nama_sepatu']; ?> ?');" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
+                                <a href="<?= base_url('sepatu/ubahSepatu/') . $s['id']; ?>" class="badge badge-info"><i class="fas fa-edit"></i> Ubah</a>
+                                <a href="<?= base_url('sepatu/hapusSepatu/') . $s['id']; ?>" onclick="return confirm('Kamu yakin akan menghapus <?= $judul . '' . $s['nama_sepatu']; ?> ?');" class="badge badge-danger"><i class="fas fa-trash"></i> Hapus</a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -77,7 +78,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?= form_open_multipart('mobil'); ?>
+            <?= form_open_multipart('sepatu'); ?>
                 <div class="modal-body">
             
                     <!-- Input Kode Sepatu -->
@@ -153,7 +154,7 @@
 
                     <!-- Deksripsi -->
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-user" id="deskripsi" name="deskripsi" placeholder="Masukkan deskripsi produk">
+                        <textarea name="deskripsi" id="deskripsi" class="form-control form-control-user"></textarea>
                     </div>
 
                     <!-- Picture -->

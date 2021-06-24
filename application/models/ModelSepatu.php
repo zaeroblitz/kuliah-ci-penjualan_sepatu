@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class ModelSepatu extends CI_Model
 {
     // Manajemen sepatu
-    public function getMobil()
+    public function getSepatu()
     {
         return $this->db->get('sepatu');
     }

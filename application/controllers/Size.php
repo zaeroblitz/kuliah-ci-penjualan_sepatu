@@ -9,8 +9,16 @@ class Size extends CI_Controller
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
         $data['size'] = $this->ModelSize->getSize()->result_array();
 
-        $this->form_validation->set_rules('size', 'Size', 'required', [
-            'required' => 'Nama Size Harus Diisi'
+        $this->form_validation->set_rules('uk', 'UK Size', 'required', [
+            'required' => 'UK Size Harus Diisi'
+        ]);
+
+        $this->form_validation->set_rules('us', 'US Size', 'required', [
+            'required' => 'UK Size Harus Diisi'
+        ]);
+
+        $this->form_validation->set_rules('eu', 'EU Size', 'required', [
+            'required' => 'EU Size Harus Diisi'
         ]);
 
         if ($this->form_validation->run() == false) {
@@ -21,10 +29,13 @@ class Size extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $data = [
-                'nama_size' => $this->input->post('size')
+                'UK' => $this->input->post('uk'),
+                'US' => $this->input->post('us'),
+                'EU' => $this->input->post('eu'),
             ];
 
             $this->ModelSize->simpanSize($data);
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Data Ukuran Sepatu Berhasil Ditambah</div>');
             redirect('size/showOrAddSize');
         }
     }
@@ -34,12 +45,19 @@ class Size extends CI_Controller
         $data['judul'] = 'Ubah Size';
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
 
-        $where = ['id_size' => $this->uri->segment(3)];
+        $where = ['id' => $this->uri->segment(3)];
         $data['size'] = $this->ModelSize->sizeWhere($where)->row_array();
-        $nama_size = $data['size']['nama_size'];
 
-        $this->form_validation->set_rules('size', 'Nama Size', 'required|trim', [
-            'required' => 'Nama Size tidak boleh kosong'
+        $this->form_validation->set_rules('uk', 'UK Size', 'required', [
+            'required' => 'UK Size Harus Diisi'
+        ]);
+
+        $this->form_validation->set_rules('us', 'US Size', 'required', [
+            'required' => 'UK Size Harus Diisi'
+        ]);
+
+        $this->form_validation->set_rules('eu', 'EU Size', 'required', [
+            'required' => 'EU Size Harus Diisi'
         ]);
 
         if ($this->form_validation->run() == false) {
@@ -51,18 +69,21 @@ class Size extends CI_Controller
             validation_errors();
             $this->session->set_flashdata('size_error', '<div class="alert alert-danger alert-message" role="alert">Nama Size Tidak Boleh Kosong</div>');
         } else {
-            $size = $this->input->post('size', true);
+            $dataPost = [
+                'UK' => $this->input->post('uk'),
+                'US' => $this->input->post('us'),
+                'EU' => $this->input->post('eu'),
+            ];
             $id = $this->input->post('id', true);
             $back = $this->input->post('back', true);
 
-            if ($back == 'back' || $size == $nama_size) {
+            $simliarSize = $data['size']['UK'] == $dataPost['UK'] && $data['size']['US'] == $dataPost['US'] &&  $data['size']['EU'] == $dataPost['EU'];
+
+            if ($back == 'back') {
                 $this->session->set_flashdata('pesan', '<div class="alert alert-warning alert-message" role="alert">Nama Size Tidak Berubah</div>');
                 redirect('size/showOrAddSize');
             } else {
-                $this->db->set('nama_size', $size);
-                $this->db->where('id_size', $id);
-                $this->db->update('size');
-
+                $this->ModelSize->updateSize($dataPost, ['id' => $this->input->post('id', true)]);
                 $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Nama Size Berhasil Diubah</div>');
                 redirect('size/showOrAddSize');
             }
@@ -71,7 +92,7 @@ class Size extends CI_Controller
 
     public function hapusSize()
     {
-        $where = ['id_size' => $this->uri->segment(3)];
+        $where = ['id' => $this->uri->segment(3)];
         $this->ModelSize->hapusSize($where);
         redirect('size/showOrAddSize');
     }

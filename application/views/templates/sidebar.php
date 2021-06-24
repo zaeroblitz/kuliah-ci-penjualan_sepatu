@@ -26,6 +26,11 @@
         <a class="nav-link pb-0" href="<?= base_url('kategori/showOrAddKategori'); ?>">
             <i class="fa fa-fw fa-tags"></i>
             <span>Data Kategori Sepatu</span></a>
+    </li>    
+    <li class="nav-item">
+        <a class="nav-link pb-0" href="<?= base_url('size/showOrAddSize'); ?>">
+            <i class="fa fa-fw fa-shoe-prints"></i>
+            <span>Data Ukuran Sepatu</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link pb-0" href="<?= base_url('user/anggota'); ?>">

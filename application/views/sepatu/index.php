@@ -41,7 +41,14 @@
                             <td><?= $s['merek']; ?></td>
                             <td><?= $s['warna']; ?></td>
                             <td><?= $s['for_gender']; ?></td>
-                            <td><?= $s['size_available']; ?></td>
+                            <td>
+                                <?php 
+                                    $size =  $s['size_available']; 
+                                    $where = ['id' => $size];
+                                    $ukSize = $this->ModelSize->sizeWhere($where)->row_array();
+                                    echo 'EU ' . $ukSize['EU'];
+                                ?>
+                            </td>
                             <td><?= $s['harga']; ?></td>
                             <td><?= $s['stok']; ?></td>
                             <td><?= $s['terjual']; ?></td>
@@ -118,7 +125,7 @@
                             <option value="">Pilih Gender</option>
                             <?php
                             foreach ($gender as $g) { ?>
-                                <option value="<?= $k['id']; ?>"><?= $k['gender']; ?></option>
+                                <option value="<?= $g['id']; ?>"><?= $g['gender']; ?></option>
                             <?php } ?>
                         </select>
                     </div>           
@@ -129,9 +136,9 @@
                         <legend>Ukuran Sepatu</legend>
                         <?php
                             foreach ($size as $s) { ?>
-                            <label>
-                                <input type="checkbox" class="form-control form-control-user" id="size" name="size" value="<?=  $s['id'] ?>">
-                                <?=  $s['UK'] . '|' . $s['US'] . '|' . $s['EU'] ?>
+                            <label style="width: 200px; margin: 5px; font-size: 10px;">
+                                <input type="checkbox" class="form-control-sm form-control-user" id="size" name="size" value="<?=  $s['id'] ?>">
+                                <?=  'UK ' . $s['UK'] . ' | ' . 'US ' . $s['US'] . ' | ' . $s['EU'] ?>
                             </label>
                             <?php } ?>
                         </fieldset>                        

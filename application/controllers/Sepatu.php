@@ -47,6 +47,8 @@ class Sepatu extends CI_Controller
             } else {
             }
 
+            $sizeValues = json_decode($this->input->post('size', true));
+            
             $data = [
                 'kode_sepatu' => $this->input->post('kode_sepatu', true),
                 'nama_sepatu' => $this->input->post('nama_sepatu', true),
@@ -54,7 +56,7 @@ class Sepatu extends CI_Controller
                 'merek' => $this->input->post('merek', true),
                 'warna' => $this->input->post('warna', true),
                 'for_gender' => $this->input->post('gender', true),
-                'size_available' => $this->input->post('size', true),
+                'size_available' => $sizeValues,
                 'harga' => $this->input->post('harga', true),
                 'stok' => $this->input->post('stok', true),
                 'terjual' => $this->input->post('sold', true),
@@ -86,6 +88,9 @@ class Sepatu extends CI_Controller
             $this->load->view('sepatu/ubah-sepatu', $data);
             $this->load->view('templates/footer');
         } else {
+
+            $sizeValues = implode(', ',$this->input->post('size'));
+            
             $dataPost = [
                 'kode_sepatu' => $this->input->post('kode_sepatu', true),
                 'nama_sepatu' => $this->input->post('nama_sepatu', true),
@@ -93,7 +98,7 @@ class Sepatu extends CI_Controller
                 'merek' => $this->input->post('merek', true),
                 'warna' => $this->input->post('warna', true),
                 'for_gender' => $this->input->post('gender', true),
-                'size_available' => $this->input->post('size', true),
+                'size_available' => $sizeValues,
                 'harga' => $this->input->post('harga', true),
                 'stok' => $this->input->post('stok', true),
                 'terjual' => $this->input->post('sold', true),
@@ -117,7 +122,7 @@ class Sepatu extends CI_Controller
 
             if ($back == 'back' || $similarDataPost) {
                 $this->session->set_flashdata('pesan', '<div class="alert alert-warning alert-message" role="alert">Data sepatu Tidak Berubah</div>');
-                redirect('sepatu');
+                redirect('sepatu/index');
             } else {
                 // Jika ada gambar yang akan diupload
                 $upload_image = $_FILES['picture']['name'];

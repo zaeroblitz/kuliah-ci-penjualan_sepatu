@@ -79,14 +79,16 @@
             </div>
 
             <!-- Input Ukuran Sepatu -->
-            <div class="form-group row">
+            <div class="form-group row text-center align-items-center justify-content-center">
                 <label for="size" class="col-sm-2 col-form-label">Ukuran Sepatu Tersedia</label>
                 <div class="col-sm-10">
                     <?php
                     foreach ($size as $s) { ?>
-                        <label style="width: 200px; text-align: center; margin: 5px; font-size: 10px;">
+                        <label style="width: 200px; text-align: center; font-size: 10px;">
                             <input type="checkbox" class="form-control-md  form-control-user" id="size" name="size[]" value="<?= $s['id'] ?>" 
-                            <?php echo ($sepatu['size_available'] == $s['id']) ? 'checked' : '' ?>>
+                            <?php 
+                                echo ($sepatu['size_available'] == $s['id']) ? 'checked' : '' 
+                            ?>>
                             <?= 'UK ' . $s['UK'] . ' | ' . 'US ' . $s['US'] . ' | ' . 'EU ' . $s['EU'] ?>
                         </label>
                     <?php } ?>

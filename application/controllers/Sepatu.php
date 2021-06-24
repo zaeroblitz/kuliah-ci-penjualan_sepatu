@@ -16,7 +16,7 @@ class Sepatu extends CI_Controller
         $data['sepatu'] = $this->ModelSepatu->getSepatu()->result_array();
         $data['kategori'] = $this->ModelKategori->getKategori()->result_array();
         $data['gender'] = $this->ModelGender->getGender()->result_array();
-        $data['size'] = $this->ModelSize->getSize()->result_array();
+        $data['ukuran'] = $this->ModelSize->getSize()->result_array();
         $this->formValidasi();
 
         if ($this->form_validation->run() == false) {
@@ -46,17 +46,15 @@ class Sepatu extends CI_Controller
                 }
             } else {
             }
-
-            $sizeValues = json_decode($this->input->post('size', true));
             
-            $data = [
+            $dataPost = [
                 'kode_sepatu' => $this->input->post('kode_sepatu', true),
                 'nama_sepatu' => $this->input->post('nama_sepatu', true),
                 'id_kategori' => $this->input->post('id_kategori', true),
                 'merek' => $this->input->post('merek', true),
                 'warna' => $this->input->post('warna', true),
                 'for_gender' => $this->input->post('gender', true),
-                'size_available' => $sizeValues,
+                'size_available' => json_encode(implode(',', $this->input->post('size', true))),
                 'harga' => $this->input->post('harga', true),
                 'stok' => $this->input->post('stok', true),
                 'terjual' => $this->input->post('sold', true),
@@ -64,7 +62,8 @@ class Sepatu extends CI_Controller
                 'picture' => $image,
             ];
 
-            $this->ModelSepatu->simpanSepatu($data);
+            $this->ModelSepatu->simpanSepatu($dataPost);
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Data Berhasil Ditambahkan</div>');
             redirect('sepatu');
         }
     }
@@ -88,8 +87,6 @@ class Sepatu extends CI_Controller
             $this->load->view('sepatu/ubah-sepatu', $data);
             $this->load->view('templates/footer');
         } else {
-
-            $sizeValues = implode(', ',$this->input->post('size'));
             
             $dataPost = [
                 'kode_sepatu' => $this->input->post('kode_sepatu', true),
@@ -98,7 +95,7 @@ class Sepatu extends CI_Controller
                 'merek' => $this->input->post('merek', true),
                 'warna' => $this->input->post('warna', true),
                 'for_gender' => $this->input->post('gender', true),
-                'size_available' => $sizeValues,
+                'size_available' => json_encode(implode(',', $this->input->post('size', true))),
                 'harga' => $this->input->post('harga', true),
                 'stok' => $this->input->post('stok', true),
                 'terjual' => $this->input->post('sold', true),
@@ -200,7 +197,7 @@ class Sepatu extends CI_Controller
         ]);
 
         // Validasi Size            
-        $this->form_validation->set_rules('size', 'Size', 'required', [
+        $this->form_validation->set_rules('size[]', 'Size', 'required', [
             'required' => 'Ukuran sepatu harus diisi'
         ]);
 

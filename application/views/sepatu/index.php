@@ -42,11 +42,13 @@
                             <td><?= $s['warna']; ?></td>
                             <td><?= $s['for_gender']; ?></td>
                             <td>
-                                <?php 
-                                    $size =  $s['size_available']; 
-                                    $where = ['id' => $size];
-                                    $ukSize = $this->ModelSize->sizeWhere($where)->row_array();
-                                    echo 'EU ' . $ukSize['EU'];
+                                <?php
+                                foreach (explode(',', $s['size_available']) as $sz) {
+                                        $str_replace_sz = str_replace('"', "", $sz);
+                                        $where = ['id' => $str_replace_sz];
+                                        $ukSize = $this->ModelSize->sizeWhere($where)->row_array();
+                                        echo 'EU ' . $ukSize['EU'] . ', ';
+                                }
                                 ?>
                             </td>
                             <td><?= $s['harga']; ?></td>
@@ -56,8 +58,7 @@
                             <td>
                                 <picture>
                                     <source srcset="" type="image/svg+xml">
-                                    <img src="<?= base_url('assets/img/upload/') . $s['picture']; ?>" class="img-fluid img-thumbnail" alt="..."
-                                    style="object-fit: cover; background-position: center; width:350px; height:100px;">
+                                    <img src="<?= base_url('assets/img/upload/') . $s['picture']; ?>" class="img-fluid img-thumbnail" alt="..." style="object-fit: cover; background-position: center; width:350px; height:100px;">
                                 </picture>
                             </td>
                             <td>
@@ -86,95 +87,95 @@
                 </button>
             </div>
             <?= form_open_multipart('sepatu'); ?>
-                <div class="modal-body">
-            
-                    <!-- Input Kode Sepatu -->
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-user" id="kode_sepatu" name="kode_sepatu" placeholder="Masukkan Kode Sepatu">
-                    </div>
-                    
-                    <!-- Input Nama Sepatu -->
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-user" id="nama_sepatu" name="nama_sepatu" placeholder="Masukkan Nama Sepatu">
-                    </div>
+            <div class="modal-body">
 
-                    <!-- Input Kategori Sepatu -->
-                    <div class="form-group">
-                        <select name="id_kategori" class="form-control form-control-user">
-                            <option value="">Pilih Kategori</option>
-                            <?php
-                            foreach ($kategori as $k) { ?>
-                                <option value="<?= $k['id_kategori']; ?>"><?= $k['nama_kategori']; ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
+                <!-- Input Kode Sepatu -->
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" id="kode_sepatu" name="kode_sepatu" placeholder="Masukkan Kode Sepatu">
+                </div>
 
-                    <!-- Input Merek Sepatu -->
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-user" id="merek" name="merek" placeholder="Masukkan nama merek">
-                    </div>
+                <!-- Input Nama Sepatu -->
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" id="nama_sepatu" name="nama_sepatu" placeholder="Masukkan Nama Sepatu">
+                </div>
 
-                    <!-- Input Warna Sepatu -->
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-user" id="warna" name="warna" placeholder="Masukkan Warna">
-                    </div>
+                <!-- Input Kategori Sepatu -->
+                <div class="form-group">
+                    <select name="id_kategori" class="form-control form-control-user">
+                        <option value="">Pilih Kategori</option>
+                        <?php
+                        foreach ($kategori as $k) { ?>
+                            <option value="<?= $k['id_kategori']; ?>"><?= $k['nama_kategori']; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
 
-                     <!-- Input Pilihan Gender -->
-                     <div class="form-group">
-                        <select name="gender" class="form-control form-control-user">
-                            <option value="">Pilih Gender</option>
-                            <?php
-                            foreach ($gender as $g) { ?>
-                                <option value="<?= $g['id']; ?>"><?= $g['gender']; ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>           
+                <!-- Input Merek Sepatu -->
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" id="merek" name="merek" placeholder="Masukkan nama merek">
+                </div>
 
-                      <!-- Input Ukuran Sepatu -->
-                    <div class="form-group">
-                        <fieldset>                        
+                <!-- Input Warna Sepatu -->
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" id="warna" name="warna" placeholder="Masukkan Warna">
+                </div>
+
+                <!-- Input Pilihan Gender -->
+                <div class="form-group">
+                    <select name="gender" class="form-control form-control-user">
+                        <option value="">Pilih Gender</option>
+                        <?php
+                        foreach ($gender as $g) { ?>
+                            <option value="<?= $g['id']; ?>"><?= $g['gender']; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+
+                <!-- Input Ukuran Sepatu -->
+                <div class="form-group">
+                    <fieldset>
                         <legend>Ukuran Sepatu</legend>
                         <?php
-                            foreach ($size as $s) { ?>
+                        foreach ($ukuran as $s) { ?>
                             <label style="width: 200px; margin: 5px; font-size: 10px;">
-                                <input type="checkbox" class="form-control-sm form-control-user" id="size" name="size" value="<?=  $s['id'] ?>">
-                                <?=  'UK ' . $s['UK'] . ' | ' . 'US ' . $s['US'] . ' | ' . $s['EU'] ?>
+                                <input type="checkbox" class="form-control-sm form-control-user" id="size" name="size[]" value="<?= $s['id'] ?>">
+                                <?= 'UK ' . $s['UK'] . ' | ' . 'US ' . $s['US'] . ' | ' . $s['EU'] ?>
                             </label>
-                            <?php } ?>
-                        </fieldset>                        
-                    </div>
-            
-                    <!-- Input Harga Sepatu -->
-                    <div class="form-group">
-                        <input type="number" class="form-control form-control-user" id="harga" name="harga" placeholder="Masukkan Harga Sepatu">
-                    </div>
-
-                    <!-- Stok -->
-                    <div class="form-group">
-                        <input type="number" class="form-control form-control-user" id="stok" name="stok" placeholder="Masukkan nominal stok">
-                    </div>
-
-                    <!-- Sold -->
-                    <div class="form-group">
-                        <input type="number" class="form-control form-control-user" id="sold" name="sold" placeholder="Masukkan stok terjual">
-                    </div>
-
-                    <!-- Deksripsi -->
-                    <div class="form-group">
-                        <textarea name="deskripsi" id="deskripsi" class="form-control form-control-user"></textarea>
-                    </div>
-
-                    <!-- Picture -->
-                    <div class="form-group">
-                        <input type="file" class="form-control form-control-user" id="picture" name="picture">
-                    </div>
+                        <?php } ?>
+                    </fieldset>
                 </div>
 
-                <!-- Button -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-ban"></i> Close</button>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Tambah</button>
+                <!-- Input Harga Sepatu -->
+                <div class="form-group">
+                    <input type="number" class="form-control form-control-user" id="harga" name="harga" placeholder="Masukkan Harga Sepatu">
                 </div>
+
+                <!-- Stok -->
+                <div class="form-group">
+                    <input type="number" class="form-control form-control-user" id="stok" name="stok" placeholder="Masukkan nominal stok">
+                </div>
+
+                <!-- Sold -->
+                <div class="form-group">
+                    <input type="number" class="form-control form-control-user" id="sold" name="sold" placeholder="Masukkan stok terjual">
+                </div>
+
+                <!-- Deksripsi -->
+                <div class="form-group">
+                    <textarea name="deskripsi" id="deskripsi" class="form-control form-control-user"></textarea>
+                </div>
+
+                <!-- Picture -->
+                <div class="form-group">
+                    <input type="file" class="form-control form-control-user" id="picture" name="picture">
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-ban"></i> Close</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Tambah</button>
+            </div>
             </form>
         </div>
     </div>

@@ -68,10 +68,10 @@
                             </td>
                             <td><?= date("Y-m-d H:i:s", $a['tanggal_input']); ?></td>
                             <td>
-                                <a href="<?= base_url('user/ubahAnggota/') . $a['id'] ?>" class="badge badge-info"><i class="fas fa-edit"></i> Ubah</a>
+                                <a href="<?= base_url('anggota/ubahAnggota/') . $a['id'] ?>" class="badge badge-info"><i class="fas fa-edit"></i> Ubah</a>
                             </td>
                             <td>
-                                <a href="<?= base_url('user/ubahAnggota/') . $a['id'] ?>" onclick="return confirm('Kamu yakin akan menghapus data <?= $a['nama'] ?>?');" class="badge badge-danger"><i class="fas fa-trash"></i>
+                                <a href="<?= base_url('anggota/ubahAnggota/') . $a['id'] ?>" onclick="return confirm('Kamu yakin akan menghapus data <?= $a['nama'] ?>?');" class="badge badge-danger"><i class="fas fa-trash"></i>
                                     Hapus</a>
                             </td>
                         </tr>

@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-9">
-            <form action="<?= base_url('user/ubahAnggota/') . $selectedUser['id']; ?>" method="POST">
+            <form action="<?= base_url('anggota/ubahAnggota/') . $selectedUser['id']; ?>" method="POST">
 
                 <!-- ID -->
                 <div class="form-group row">

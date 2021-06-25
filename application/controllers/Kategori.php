@@ -9,23 +9,27 @@ class Kategori extends CI_Controller
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
         $data['kategori'] = $this->ModelKategori->getKategori()->result_array();
 
-        $this->form_validation->set_rules('kategori', 'Kategori', 'required', [
-            'required' => 'Nama Kategori Harus Diisi'
-        ]);
+        if ($data['user']['role_id'] == 1) {
+            $this->form_validation->set_rules('kategori', 'Kategori', 'required', [
+                'required' => 'Nama Kategori Harus Diisi'
+            ]);
 
-        if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('kategori/kategori', $data);
-            $this->load->view('templates/footer');
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/topbar', $data);
+                $this->load->view('kategori/kategori', $data);
+                $this->load->view('templates/footer');
+            } else {
+                $data = [
+                    'nama_kategori' => $this->input->post('kategori')
+                ];
+
+                $this->ModelKategori->simpanKategori($data);
+                redirect('kategori/showOrAddKategori');
+            }
         } else {
-            $data = [
-                'nama_kategori' => $this->input->post('kategori')
-            ];
-
-            $this->ModelKategori->simpanKategori($data);
-            redirect('kategori/showOrAddKategori');
+            redirect('autentifikasi/blok');
         }
     }
 

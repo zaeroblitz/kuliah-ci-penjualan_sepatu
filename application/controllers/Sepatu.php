@@ -17,54 +17,59 @@ class Sepatu extends CI_Controller
         $data['kategori'] = $this->ModelKategori->getKategori()->result_array();
         $data['gender'] = $this->ModelGender->getGender()->result_array();
         $data['ukuran'] = $this->ModelSize->getSize()->result_array();
-        $this->formValidasi();
 
-        if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('sepatu/index', $data);
-            $this->load->view('templates/footer');
-        } else {
+        if ($data['user']['role_id'] == 1) {
+            $this->formValidasi();
 
-            // Jika ada gambar yang akan diupload
-            $upload_image = $_FILES['picture']['name'];
-
-            if ($upload_image) {
-
-                // Konfigurasi sebelum gambar diupload
-                $config['upload_path'] = './assets/img/upload/';
-                $config['allowed_types'] = 'jpg|png|jpeg';
-                $config['file_name'] = 'img' . time();
-
-                $this->load->library('upload', $config);
-
-                if ($this->upload->do_upload('picture')) {
-                    $image = $this->upload->data('file_name');
-                } else {
-                    $image = 'default.png';
-                }
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/topbar', $data);
+                $this->load->view('sepatu/index', $data);
+                $this->load->view('templates/footer');
             } else {
-            }
-            
-            $dataPost = [
-                'kode_sepatu' => $this->input->post('kode_sepatu', true),
-                'nama_sepatu' => $this->input->post('nama_sepatu', true),
-                'id_kategori' => $this->input->post('id_kategori', true),
-                'merek' => $this->input->post('merek', true),
-                'warna' => $this->input->post('warna', true),
-                'for_gender' => $this->input->post('gender', true),
-                'size_available' => json_encode(implode(',', $this->input->post('size', true))),
-                'harga' => $this->input->post('harga', true),
-                'stok' => $this->input->post('stok', true),
-                'terjual' => $this->input->post('sold', true),
-                'deskripsi' => $this->input->post('deskripsi', true),
-                'picture' => $image,
-            ];
 
-            $this->ModelSepatu->simpanSepatu($dataPost);
-            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Data Berhasil Ditambahkan</div>');
-            redirect('sepatu');
+                // Jika ada gambar yang akan diupload
+                $upload_image = $_FILES['picture']['name'];
+
+                if ($upload_image) {
+
+                    // Konfigurasi sebelum gambar diupload
+                    $config['upload_path'] = './assets/img/upload/';
+                    $config['allowed_types'] = 'jpg|png|jpeg';
+                    $config['file_name'] = 'img' . time();
+
+                    $this->load->library('upload', $config);
+
+                    if ($this->upload->do_upload('picture')) {
+                        $image = $this->upload->data('file_name');
+                    } else {
+                        $image = 'default.png';
+                    }
+                } else {
+                }
+
+                $dataPost = [
+                    'kode_sepatu' => $this->input->post('kode_sepatu', true),
+                    'nama_sepatu' => $this->input->post('nama_sepatu', true),
+                    'id_kategori' => $this->input->post('id_kategori', true),
+                    'merek' => $this->input->post('merek', true),
+                    'warna' => $this->input->post('warna', true),
+                    'for_gender' => $this->input->post('gender', true),
+                    'size_available' => json_encode(implode(',', $this->input->post('size', true))),
+                    'harga' => $this->input->post('harga', true),
+                    'stok' => $this->input->post('stok', true),
+                    'terjual' => $this->input->post('sold', true),
+                    'deskripsi' => $this->input->post('deskripsi', true),
+                    'picture' => $image,
+                ];
+
+                $this->ModelSepatu->simpanSepatu($dataPost);
+                $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Data Berhasil Ditambahkan</div>');
+                redirect('sepatu');
+            }
+        } else {
+            redirect('autentifikasi/blok');
         }
     }
 
@@ -87,7 +92,7 @@ class Sepatu extends CI_Controller
             $this->load->view('sepatu/ubah-sepatu', $data);
             $this->load->view('templates/footer');
         } else {
-            
+
             $dataPost = [
                 'kode_sepatu' => $this->input->post('kode_sepatu', true),
                 'nama_sepatu' => $this->input->post('nama_sepatu', true),

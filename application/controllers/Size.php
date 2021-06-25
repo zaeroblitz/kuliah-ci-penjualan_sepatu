@@ -9,34 +9,38 @@ class Size extends CI_Controller
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
         $data['size'] = $this->ModelSize->getSize()->result_array();
 
-        $this->form_validation->set_rules('uk', 'UK Size', 'required', [
-            'required' => 'UK Size Harus Diisi'
-        ]);
+        if ($data['user']['role_id'] == 1) {
+            $this->form_validation->set_rules('uk', 'UK Size', 'required', [
+                'required' => 'UK Size Harus Diisi'
+            ]);
 
-        $this->form_validation->set_rules('us', 'US Size', 'required', [
-            'required' => 'UK Size Harus Diisi'
-        ]);
+            $this->form_validation->set_rules('us', 'US Size', 'required', [
+                'required' => 'UK Size Harus Diisi'
+            ]);
 
-        $this->form_validation->set_rules('eu', 'EU Size', 'required', [
-            'required' => 'EU Size Harus Diisi'
-        ]);
+            $this->form_validation->set_rules('eu', 'EU Size', 'required', [
+                'required' => 'EU Size Harus Diisi'
+            ]);
 
-        if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('size/size', $data);
-            $this->load->view('templates/footer');
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/topbar', $data);
+                $this->load->view('size/size', $data);
+                $this->load->view('templates/footer');
+            } else {
+                $data = [
+                    'UK' => $this->input->post('uk'),
+                    'US' => $this->input->post('us'),
+                    'EU' => $this->input->post('eu'),
+                ];
+
+                $this->ModelSize->simpanSize($data);
+                $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Data Ukuran Sepatu Berhasil Ditambah</div>');
+                redirect('size/showOrAddSize');
+            }
         } else {
-            $data = [
-                'UK' => $this->input->post('uk'),
-                'US' => $this->input->post('us'),
-                'EU' => $this->input->post('eu'),
-            ];
-
-            $this->ModelSize->simpanSize($data);
-            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Data Ukuran Sepatu Berhasil Ditambah</div>');
-            redirect('size/showOrAddSize');
+            redirect('autentifikasi/blok');
         }
     }
 

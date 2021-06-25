@@ -16,7 +16,7 @@ class User extends CI_Controller
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
 
         $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/sidebar-member', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('user/index', $data);
         $this->load->view('templates/footer');
@@ -55,9 +55,6 @@ class User extends CI_Controller
                 if ($upload_image) {
                     $config['upload_path'] = './assets/img/profile/';
                     $config['allowed_types'] = 'gif|jpg|png';
-                    // $config['max_sizes'] = '3000';
-                    // $config['max_width'] = '1024';
-                    // $config['max_height'] = '1000';
                     $config['file_name'] = 'pro' . time();
 
                     $this->load->library('upload', $config);

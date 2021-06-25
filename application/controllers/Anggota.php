@@ -9,11 +9,15 @@ class Anggota extends CI_Controller
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
         $data['anggota'] = $this->ModelUser->getAllUser()->result_array();
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('anggota/anggota', $data);
-        $this->load->view('templates/footer');
+        if ($data['user']['role_id'] == 1) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('anggota/anggota', $data);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('autentifikasi/blok');
+        }
     }
 
     public function ubahAnggota()

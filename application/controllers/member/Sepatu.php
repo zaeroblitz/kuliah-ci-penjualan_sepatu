@@ -19,7 +19,7 @@ class Sepatu extends CI_Controller
         $data['ukuran'] = $this->ModelSize->getSize()->result_array();
 
         $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/sidebar-member', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('sepatu/sepatu-member', $data);
         $this->load->view('templates/footer');

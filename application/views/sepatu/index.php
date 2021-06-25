@@ -37,21 +37,33 @@
                             <th scope="row"><?= $a++; ?></th>
                             <td><?= $s['kode_sepatu']; ?></td>
                             <td><?= $s['nama_sepatu']; ?></td>
-                            <td><?= $s['id_kategori']; ?></td>
-                            <td><?= $s['merek']; ?></td>
-                            <td><?= $s['warna']; ?></td>
-                            <td><?= $s['for_gender']; ?></td>
-                            <td>
-                                <?php
-                                foreach (explode(',', $s['size_available']) as $sz) {
-                                        $str_replace_sz = str_replace('"', "", $sz);
-                                        $where = ['id' => $str_replace_sz];
-                                        $ukSize = $this->ModelSize->sizeWhere($where)->row_array();
-                                        echo 'EU ' . $ukSize['EU'] . ', ';
+                            <td><?php
+                                foreach ($kategori as $k) {
+                                    echo ($s['id_kategori']  == $k['id_kategori']) ? $k['nama_kategori'] : '';
                                 }
                                 ?>
                             </td>
-                            <td><?= $s['harga']; ?></td>
+                            <td><?= $s['merek']; ?></td>
+                            <td><?= $s['warna']; ?></td>
+                            <td><?php
+                                foreach ($gender as $g) {
+                                    echo ($s['for_gender'] == $g['id']) ? $g['gender'] : '';
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                <?php
+                                foreach (explode(',', $s['size_available']) as $sz) {
+                                    $str_replace_sz = str_replace('"', "", $sz);
+                                    $where = ['id' => $str_replace_sz];
+                                    $ukSize = $this->ModelSize->sizeWhere($where)->row_array();
+                                    echo 'EU ' . $ukSize['EU'] . ', ';
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                <?= 'Rp. ' . strrev(implode('.', str_split(strrev(strval($s['harga'])), 3))); ?>
+                            </td>
                             <td><?= $s['stok']; ?></td>
                             <td><?= $s['terjual']; ?></td>
                             <td><?= word_limiter($s['deskripsi'], 10) ?></td>

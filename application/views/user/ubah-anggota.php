@@ -16,8 +16,7 @@
                 <div class="form-group row">
                     <label for="nama" class="col-sm-2 col-formlabel">Nama</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nama" name="nama" value="<?= $selectedUser['nama']; ?>">
-                        <?= form_error('nama', '<small class="textdanger pl-3">', '</small>'); ?>
+                        <input type="text" class="form-control" id="nama" name="nama" value="<?= $selectedUser['nama']; ?>" readonly>
                     </div>
                 </div>
 

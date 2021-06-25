@@ -35,10 +35,18 @@
                 <label for="id_kategori" class="col-sm-2 col-form-label">Kategori Sepatu</label>
                 <div class="col-sm-10">
                     <select name="id_kategori" class="form-control form-control-user">
-                        <option value="<?= $sepatu['id_kategori'] ?>">Pilih Kategori</option>
+                        <option value="<?= $sepatu['id_kategori'] ?>">
+                            <?php
+                            foreach ($kategori as $k) {
+                                echo ($k['id_kategori'] == $sepatu['id_kategori']) ? $k['nama_kategori'] : '';
+                            }
+                            ?>
+                        </option>
                         <?php
                         foreach ($kategori as $k) { ?>
-                            <option value="<?= $k['nama_kategori']; ?>"><?= $k['nama_kategori']; ?></option>
+                        <?php  if($k['id_kategori'] != $sepatu['id_kategori']) { ?>
+                        <option value="<?= $k['id_kategori']; ?>"><?= $k['nama_kategori']; ?></option>
+                       <?php  } ?>
                         <?php } ?>
                     </select>
                     <?= form_error('id_kategori', '<small class="text-danger pl-3">', '</small>'); ?>
@@ -86,8 +94,11 @@
                     foreach ($size as $s) { ?>
                         <label style="width: 200px; text-align: center; font-size: 10px;">
                             <input type="checkbox" class="form-control-md  form-control-user" id="size" name="size[]" value="<?= $s['id'] ?>" 
-                            <?php 
-                                echo ($sepatu['size_available'] == $s['id']) ? 'checked' : '' 
+                            <?php
+                            foreach (explode(',', $sepatu['size_available']) as $sz) {
+                                $str_replace_sz = str_replace('"', "", $sz);
+                                echo ($str_replace_sz == $s['id']) ? 'checked' : '';
+                            }
                             ?>>
                             <?= 'UK ' . $s['UK'] . ' | ' . 'US ' . $s['US'] . ' | ' . 'EU ' . $s['EU'] ?>
                         </label>

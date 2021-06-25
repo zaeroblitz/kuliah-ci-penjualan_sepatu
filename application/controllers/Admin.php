@@ -19,7 +19,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('user/index', $data);
+            $this->load->view('admin/index', $data);
             $this->load->view('templates/footer');
         } else {
             redirect('autentifikasi/blok');
@@ -40,7 +40,7 @@ class Admin extends CI_Controller
                 $this->load->view('templates/header', $data);
                 $this->load->view('templates/sidebar', $data);
                 $this->load->view('templates/topbar', $data);
-                $this->load->view('user/ubah-profile', $data);
+                $this->load->view('admin/ubah-profile', $data);
                 $this->load->view('templates/footer');
                 validation_errors();
                 $this->session->set_flashdata('nama', '<div class="alert alert-danger alert-message" role="alert">Nama Lengkap Tidak Boleh Kosong</div>');
@@ -51,7 +51,7 @@ class Admin extends CI_Controller
 
                 if ($back == 'back') {
                     $this->session->set_flashdata('pesan', '<div class="alert alert-warning alert-message" role="alert">Data User Tidak Berubah</div>');
-                    redirect('user');
+                    redirect('admin');
                 } else {
                     // Jika ada gambar yang akan diupload
                     $upload_image = $_FILES['image']['name'];
@@ -80,7 +80,7 @@ class Admin extends CI_Controller
                     $this->db->update('user');
 
                     $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Profil Berhasil Diubah</div>');
-                    redirect('user');
+                    redirect('admin');
                 }
             }
         } else {

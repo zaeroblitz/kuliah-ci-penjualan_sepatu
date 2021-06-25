@@ -11,7 +11,7 @@ class Sepatu extends CI_Controller
 
     public function index()
     {
-        $data['judul'] = 'Data sepatu';
+        $data['judul'] = 'Data Sepatu';
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
         $data['sepatu'] = $this->ModelSepatu->getSepatu()->result_array();
         $data['kategori'] = $this->ModelKategori->getKategori()->result_array();
@@ -75,7 +75,7 @@ class Sepatu extends CI_Controller
 
     public function ubahSepatu()
     {
-        $data['judul'] = 'Ubah Data sepatu';
+        $data['judul'] = 'Ubah Data Sepatu';
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
         $data['sepatu'] = $this->ModelSepatu->sepatuWhere(['id' => $this->uri->segment(3)])->row_array();
         $data['kategori'] = $this->ModelKategori->joinKategoriSepatu(['sepatu.id' => $this->uri->segment(3)])->row_array();

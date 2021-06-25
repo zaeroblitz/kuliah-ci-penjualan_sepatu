@@ -76,10 +76,18 @@
                 <label for="gender" class="col-sm-2 col-form-label">Pilihan Gender</label>
                 <div class="col-sm-10">
                     <select name="gender" class="form-control form-control-user">
-                        <option value="<?= $sepatu['for_gender'] ?>">Pilih Gender</option>
+                        <option value="<?= $sepatu['for_gender'] ?>">
+                        <?php
+                            foreach ($gender as $g) {
+                                echo ($g['id'] == $sepatu['for_gender']) ? $g['gender'] : '';
+                            }
+                            ?>
+                        </option>
                         <?php
                         foreach ($gender as $g) { ?>
-                            <option value="<?= $g['id']; ?>"><?= $g['gender']; ?></option>
+                        <?php  if($g['id'] != $sepatu['for_gender']) { ?>
+                        <option value="<?= $g['id']; ?>"><?= $g['gender']; ?></option>
+                       <?php  } ?>
                         <?php } ?>
                     </select>
                     <?= form_error('gender', '<small class="text-danger pl-3">', '</small>'); ?>

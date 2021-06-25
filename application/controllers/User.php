@@ -17,7 +17,7 @@ class User extends CI_Controller
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar-member', $data);
-        $this->load->view('templates/topbar', $data);
+        $this->load->view('templates/topbar-member', $data);
         $this->load->view('user/index', $data);
         $this->load->view('templates/footer');
     }
@@ -35,7 +35,7 @@ class User extends CI_Controller
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar-member', $data);
-            $this->load->view('templates/topbar', $data);
+            $this->load->view('templates/topbar-member', $data);
             $this->load->view('user/ubah-profile', $data);
             $this->load->view('templates/footer');
             validation_errors();

@@ -25,6 +25,7 @@ class Anggota extends CI_Controller
         $data['judul'] = 'Ubah Anggota';
         $data['anggota'] = $this->ModelUser->getAllUser()->result_array();
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
+        $data['role'] = $this->ModelUser->getRole()->result_array();
         $where = ['id' => $this->uri->segment(3)];
         $data['selectedUser'] = $this->ModelUser->getUserWhere($where)->row_array();
 

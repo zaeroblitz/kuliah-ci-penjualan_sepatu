@@ -46,10 +46,18 @@
                     <div class="col-sm-10">
                         <select name="role_id" class="form-control">
                             <option value="<?= $selectedUser['role_id']; ?>">
-                                Pilih Role
+                            <?php
+                            foreach ($role as $r) {
+                                echo ($r['id'] == $selectedUser['role_id']) ? $r['role_id'] : '';
+                            }
+                            ?>
                             </option>
-                            <option value="1">Administrator</option>
-                            <option value="2">Member</option>
+                            <?php
+                                foreach ($role as $r) { ?>
+                                <?php  if($r['id'] != $selectedUser['role_id']) { ?>
+                                <option value="<?= $r['id']; ?>"><?= $r['role_id']; ?></option>
+                                <?php  } ?>
+                            <?php } ?>
                         </select>
                         <?= form_error('role_id', '<small class="textdanger pl-3">', '</small>'); ?>
                     </div>
@@ -61,10 +69,31 @@
                     <div class="col-sm-10">
                         <select name="is_active" class="form-control">
                             <option value="<?= $selectedUser['is_active']; ?>">
-                                Pilih Status
+                            <?php
+                                switch ($selectedUser['is_active']) {
+                                    case '0':
+                                        echo 'Not Activated';
+                                        break;
+                                    
+                                    default:
+                                    echo 'Activated';
+                                        break;
+                                }
+                            ?>
                             </option>
-                            <option value="0">Not Activated</option>
-                            <option value="1">Activated</option>
+                            <?php
+                                switch ($selectedUser['is_active']) {
+                                    case '0':
+                                        echo '<option value="1">Activated</option>';
+                                        break;
+                                    
+                                    default:
+                                    echo '<option value="0">Not Activated</option>';
+                                        break;
+                                }
+                            ?>
+                            <!-- <option value="0">Not Activated</option>
+                            <option value="1">Activated</option> -->
                         </select>
                         <?= form_error('is_active', '<small class="textdanger pl-3">', '</small>'); ?>
                     </div>

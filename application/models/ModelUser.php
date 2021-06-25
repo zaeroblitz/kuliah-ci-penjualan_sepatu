@@ -43,4 +43,9 @@ class ModelUser extends CI_Model
     {
         $this->db->update('user', $data, $where);
     }
+
+    // Role
+    public function getRole(){
+        return $this->db->get('role');
+    }
 }

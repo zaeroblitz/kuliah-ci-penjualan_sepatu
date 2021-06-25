@@ -35,7 +35,7 @@
     <li class="nav-item">
         <a class="nav-link pb-0" href="<?= base_url('anggota/index'); ?>">
             <i class="fa fa-fw fa-users"></i>
-            <span>Data Anggota</span></a>
+            <span>Data Member</span></a>
     </li>
     </li>
     <!-- Divider -->

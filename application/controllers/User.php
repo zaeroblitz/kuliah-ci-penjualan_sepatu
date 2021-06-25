@@ -34,7 +34,7 @@ class User extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/sidebar-member', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('user/ubah-profile', $data);
             $this->load->view('templates/footer');

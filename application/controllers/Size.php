@@ -81,8 +81,6 @@ class Size extends CI_Controller
             $id = $this->input->post('id', true);
             $back = $this->input->post('back', true);
 
-            $simliarSize = $data['size']['UK'] == $dataPost['UK'] && $data['size']['US'] == $dataPost['US'] &&  $data['size']['EU'] == $dataPost['EU'];
-
             if ($back == 'back') {
                 $this->session->set_flashdata('pesan', '<div class="alert alert-warning alert-message" role="alert">Nama Size Tidak Berubah</div>');
                 redirect('size/showOrAddSize');

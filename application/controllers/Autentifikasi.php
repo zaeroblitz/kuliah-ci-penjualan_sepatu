@@ -4,7 +4,6 @@ class Autentifikasi extends CI_Controller
 {
     public function index()
     {
-        //jika statusnya sudah login, maka tidak bisa mengakses halaman login alias dikembalikan ke tampilan user
         if ($this->session->userdata('email')) {
             redirect('user');
         }
@@ -22,7 +21,6 @@ class Autentifikasi extends CI_Controller
 
 
         if ($this->form_validation->run() == false) {
-            //kata 'login' merupakan nilai dari variabel judul dalam array $data dikirimkan ke view aute_header
             $data['judul'] = 'Login';
             $data['user'] = '';
 
@@ -40,10 +38,7 @@ class Autentifikasi extends CI_Controller
         $password = $this->input->post('password', true);
         $user = $this->ModelUser->cekData(['email' => $email])->row_array();
 
-        // Jika usernya ada
         if ($user) {
-
-            // Jika user sudah aktif
             if ($user['is_active'] == 1) {
 
                 // Cek Password
@@ -88,7 +83,7 @@ class Autentifikasi extends CI_Controller
 
     public function gagal()
     {
-        $this->load->view('autentifikasi/gagal.php');
+        $this->load->view('autentifikasi/gagal');
     }
 
     public function registrasi()
@@ -97,32 +92,22 @@ class Autentifikasi extends CI_Controller
             redirect('user');
         }
 
-        // Membuat rule untuk inputan nama agar tidak boleh kosong dengan membuat pesan error dengan bahasa sendiri yaitu 'Nama Belum Diisi'
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required', [
             'required' => 'Nama belum diisi!!!'
         ]);
 
-        // Membuat rule untuk inputan email agar tidak boleh kosong, tidak ada spasi, format email harus valid dan email belum pernah dipakai sama user lain dengan membuat pesan error dengan bahasa sendiri
-        // Yaitu jika format email tidak benar maka pesannya 'Email Tidak Benar!!'
-        // Jika email belum diisi, maka pesannya adalah 'Email Belum Diisi!!'
-        // Jika email yang diinput sudah dipakai user lain, maka pesannya adalah 'Email Sudah Terdaftar'
         $this->form_validation->set_rules('email', 'Alamat Email', 'required|trim|valid_email|is_unique[user.email]', [
             'valid_email' => 'Email Tidak Benar!!!',
             'required' => 'Email Belum Diisi!!!',
             'is_unique' => 'Email Sudah Terdaftar!!!'
         ]);
 
-        // Membuat rule untuk inputan password agat tidak boleh kosong, tidak ada spasi tidak boleh kurang dari 3 digit, dan password harus sama dengan repeat password dengan membuat pesan error dengan bahasa sendiri yaitu:
-        // Jika Password dan Repeat Password tidak diinput sama, maka pesannya adalah 'Password Tidak Sama'
-        // Jika Password diisi kurang dari 3 digit, maka pesannya adalah 'Password Terlalu Pendek'
         $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[3]|matches[password2]', [
             'matches' => 'Password Tidak Sama!!!',
             'min_length' => 'Password Terlalu Pendek',
         ]);
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|min_length[3]|matches[password1]');
 
-        // Jika disubmit kemudian validasi form diatas tidak berjalan, maka akan tetap berada di tampilan registrasi, 
-        // Tapi jika disubmit kemudian validasi form diatas berjalan, maka data yang diinput akan disimpan ke dalam tabel user 
         if ($this->form_validation->run() == false) {
             $data['judul'] = 'Registrasi Member';
             $this->load->view('templates/aute_header', $data);

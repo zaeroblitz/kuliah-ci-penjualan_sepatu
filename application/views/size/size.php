@@ -32,7 +32,7 @@
                                 <a href="<?= base_url('size/ubahSize/') . $s['id']; ?>" class="badge badge-info"><i class="fas fa-edit"></i> Ubah</a>
                             </td>
                             <td>
-                                <a href="<?= base_url('size/hapusKategori/') . $s['id']; ?>" onclick="return confirm('Kamu yakin akan menghapus <?= $judul . ' ' . 'UK ' . $s['UK'] . ' | ' . 'US ' . $s['US'] . ' | ' . 'EU ' . $s['EU']; ?> ?');" class="badge badge-danger"><i class="fas fa-trash"></i>
+                                <a href="<?= base_url('size/hapusSize/') . $s['id']; ?>" onclick="return confirm('Kamu yakin akan menghapus <?= $judul . ' ' . 'UK ' . $s['UK'] . ' | ' . 'US ' . $s['US'] . ' | ' . 'EU ' . $s['EU']; ?> ?');" class="badge badge-danger"><i class="fas fa-trash"></i>
                                     Hapus</a>
                             </td>
                         </tr>

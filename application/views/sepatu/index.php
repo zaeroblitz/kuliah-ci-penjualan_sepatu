@@ -88,7 +88,7 @@
 </div>
 <!-- End of Main Content -->
 
-<!-- Modal Tambah mobil baru-->
+<!-- Modal Tambah sepatu baru-->
 <div class="modal fade" id="sepatuBaruModal" tabindex="-1" role="dialog" aria-labelledby="sepatuBaruModalLabel" ariahidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

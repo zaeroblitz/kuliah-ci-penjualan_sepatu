@@ -44,6 +44,10 @@ class ModelUser extends CI_Model
         $this->db->update('user', $data, $where);
     }
 
+    public function deleteUser($where = null) {
+        $this->db->delete('user', $where);
+    }
+
     // Role
     public function getRole(){
         return $this->db->get('role');

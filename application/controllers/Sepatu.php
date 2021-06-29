@@ -109,20 +109,7 @@ class Sepatu extends CI_Controller
 
             $back = $this->input->post('back', true);
 
-            $similarDataPost =
-                $dataPost['kode_sepatu'] == $data['sepatu']['kode_sepatu'] &&
-                $dataPost['nama_sepatu'] == $data['sepatu']['nama_sepatu'] &&
-                $dataPost['id_kategori'] == $data['sepatu']['id_kategori'] &&
-                $dataPost['merek'] == $data['sepatu']['merek'] &&
-                $dataPost['warna'] == $data['sepatu']['warna'] &&
-                $dataPost['for_genre'] == $data['sepatu']['for_genre'] &&
-                $dataPost['size_available'] == $data['sepatu']['size_available'] &&
-                $dataPost['harga'] == $data['sepatu']['harga'] &&
-                $dataPost['stok'] == $data['sepatu']['stok'] &&
-                $dataPost['terjual'] == $data['sepatu']['terjual'] &&
-                $dataPost['deskripsi'] == $data['sepatu']['deskripsi'];
-
-            if ($back == 'back' || $similarDataPost) {
+            if ($back == 'back') {
                 $this->session->set_flashdata('pesan', '<div class="alert alert-warning alert-message" role="alert">Data sepatu Tidak Berubah</div>');
                 redirect('sepatu/index');
             } else {

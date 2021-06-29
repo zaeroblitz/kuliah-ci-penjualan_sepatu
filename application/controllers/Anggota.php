@@ -73,4 +73,11 @@ class Anggota extends CI_Controller
             }
         }
     }
+
+    public function deleteAnggota(){
+        $where = ['id' => $this->uri->segment(3)];
+        $this->ModelUser->deleteUser($where); 
+        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Data Anggota Berhasil Dihapus</div>');
+        redirect('anggota');
+    }
 }
